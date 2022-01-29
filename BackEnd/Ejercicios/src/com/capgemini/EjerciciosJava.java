@@ -3,20 +3,20 @@ package com.capgemini;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import enums.Comparacion;
+
 public class EjerciciosJava {
 
 	public static void main(String[] args) {
+
 		EjerciciosJava e = new EjerciciosJava();
-		//e.Adivina();
-		e.Decodificar();
+		// e.Adivina();
+		e.AdivinaConInterfaz();
 	}
-	
-	public void Adivina()
-	{
-		/*
-		 * Juego de “Adivina el número que estoy pensando”, un número del 0 al 100, ya
-		 * te diré si es mayor o menor que el mío, pero tienes 10 intentos como mucho.
-		 */
+
+	public void Adivina() {
 
 		int random = new Random().nextInt(101);
 		int intentos = 10;
@@ -42,16 +42,45 @@ public class EjerciciosJava {
 			}
 
 		} while (intentos > 0);
-		
+
 		teclado.close();
 		System.out.println("Fin del juego.");
 	}
-	
-	public void Decodificar() {
-		//System.out.println("Introduce el string que quieras decodificar: ");
-		String s = "  3+4+3,4-7*1=";
-		String[] separado = s.split("");
-		
-		for(int i = 0; i < separado.length; System.out.println(separado[i++]));
+
+	public void AdivinaConInterfaz() {
+		JuegoDelNumero j = new JuegoDelNumero();
+		System.out.println("Solucion: " + j.getSolucion());
+		int numero;
+		String mensaje;
+
+		JOptionPane.showMessageDialog(null, "Bienvenido, pulsa OK para comenzar");
+
+		out: while (j.getIntentos() > 0) {
+			mensaje = j.getUltimaJugada() < 0 ? "Introduce un numero entre 0 y 100: "
+					: "Tu ultima jugada fue " + j.getUltimaJugada() + " y te quedan " + j.getIntentos()+ " intentos. Introduce un numero entre 0 y 100: ";
+
+			numero = Integer.parseInt(JOptionPane.showInputDialog(mensaje)); // esta linea da error si se pincha en
+																				// Cancelar
+			Comparacion c = j.jugada(numero);
+
+			switch (c) {
+			case INVALIDA:
+				JOptionPane.showMessageDialog(null, "El numero introducido no es valido");
+				break;
+
+			case MAYOR:
+				JOptionPane.showMessageDialog(null, "Prueba con un numero MAYOR");
+				break;
+
+			case MENOR:
+				JOptionPane.showMessageDialog(null, "Prueba con un numero MENOR");
+				break;
+
+			case IGUAL:
+				JOptionPane.showMessageDialog(null, "¡Has acertado! El numero secreto es: " + j.getSolucion());
+				break out;
+			}
+			JOptionPane.showMessageDialog(null, "Te quedan " + j.getIntentos() + " intentos");
+		}
 	}
 }
