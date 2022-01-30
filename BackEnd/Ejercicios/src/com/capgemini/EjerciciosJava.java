@@ -1,5 +1,6 @@
 package com.capgemini;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ public class EjerciciosJava {
 		EjerciciosJava e = new EjerciciosJava();
 		// e.Adivina();
 		e.AdivinaConInterfaz();
+
 	}
 
 	public void Adivina() {
@@ -52,35 +54,36 @@ public class EjerciciosJava {
 		System.out.println("Solucion: " + j.getSolucion());
 		int numero;
 		String mensaje;
+		Comparacion comparacion = null;
 
 		JOptionPane.showMessageDialog(null, "Bienvenido, pulsa OK para comenzar");
 
 		out: while (j.getIntentos() > 0) {
+			// Si ultimaJugada < 0 significa que es la primera jugada
 			mensaje = j.getUltimaJugada() < 0 ? "Introduce un numero entre 0 y 100: "
-					: "Tu ultima jugada fue " + j.getUltimaJugada() + " y te quedan " + j.getIntentos()+ " intentos. Introduce un numero entre 0 y 100: ";
+					: "Tu ultima jugada fue " + j.getUltimaJugada() + " y el numero es " + comparacion
+							+ "\n Intentos restantes: " + j.getIntentos() + "\n Introduce un numero entre 0 y 100: ";
+			
+			numero = Integer.parseInt(JOptionPane.showInputDialog(mensaje)); // esta linea da error si se pincha en Cancelar
+																				
+			comparacion = j.jugada(numero);
 
-			numero = Integer.parseInt(JOptionPane.showInputDialog(mensaje)); // esta linea da error si se pincha en
-																				// Cancelar
-			Comparacion c = j.jugada(numero);
-
-			switch (c) {
+			switch (comparacion) {
 			case INVALIDA:
 				JOptionPane.showMessageDialog(null, "El numero introducido no es valido");
 				break;
 
 			case MAYOR:
-				JOptionPane.showMessageDialog(null, "Prueba con un numero MAYOR");
-				break;
 
 			case MENOR:
-				JOptionPane.showMessageDialog(null, "Prueba con un numero MENOR");
+				JOptionPane.showMessageDialog(null, "Incorrecto");
 				break;
 
 			case IGUAL:
 				JOptionPane.showMessageDialog(null, "¡Has acertado! El numero secreto es: " + j.getSolucion());
 				break out;
 			}
-			JOptionPane.showMessageDialog(null, "Te quedan " + j.getIntentos() + " intentos");
 		}
 	}
+
 }
