@@ -52,6 +52,7 @@ public class EjerciciosJava {
 
 	public void AdivinaConInterfaz() {
 		JuegoDelNumero j = new JuegoDelNumero();
+		
 		System.out.println("Solucion: " + j.getSolucion());
 		int numero;
 		String mensaje;
@@ -89,18 +90,21 @@ public class EjerciciosJava {
 	}
 
 	public void Decodificar() {
-		String cadenaInicial = "3+4+3,4-7*1=";
-
+		String cadenaInicial = JOptionPane.showInputDialog("Introduce la cadena: ");
+		//String cadenaInicial = "3+4+3,4-7*1=";
+		cadenaInicial = cadenaInicial.replace(",", ".");
 		String[] separado = cadenaInicial.split("(?<=[-+*/()])");
+		
+		Calculadora c = new Calculadora();
+		double resultado = 0;
 		
 		for(int i = 0; i < separado.length; i++)
 		{
-			separado[i] = separado[i].replace("+", " +");
-			separado[i] = separado[i].replace("-", " -");
-			separado[i] = separado[i].replace("*", " *");
-			separado[i] = separado[i].replace("/", " /");
-			separado[i] = separado[i].replace("=", " =");
-			System.out.println(separado[i]);
+			double operando = Double.parseDouble(separado[i].substring(0, separado[i].length() - 1));
+			char operador = separado[i].charAt(separado[i].length() - 1);
+			
+			resultado = c.calcular(operando, operador);
 		}
+		System.out.println(resultado);
 	}
 }
