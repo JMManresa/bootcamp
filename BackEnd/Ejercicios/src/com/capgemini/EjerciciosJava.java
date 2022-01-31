@@ -14,7 +14,8 @@ public class EjerciciosJava {
 
 		EjerciciosJava e = new EjerciciosJava();
 		// e.Adivina();
-		e.AdivinaConInterfaz();
+		// e.AdivinaConInterfaz();
+		e.Decodificar();
 
 	}
 
@@ -63,9 +64,10 @@ public class EjerciciosJava {
 			mensaje = j.getUltimaJugada() < 0 ? "Introduce un numero entre 0 y 100: "
 					: "Tu ultima jugada fue " + j.getUltimaJugada() + " y el numero es " + comparacion
 							+ "\n Intentos restantes: " + j.getIntentos() + "\n Introduce un numero entre 0 y 100: ";
-			
-			numero = Integer.parseInt(JOptionPane.showInputDialog(mensaje)); // esta linea da error si se pincha en Cancelar
-																				
+
+			numero = Integer.parseInt(JOptionPane.showInputDialog(mensaje)); // esta linea da error si se pincha en
+																				// Cancelar
+
 			comparacion = j.jugada(numero);
 
 			switch (comparacion) {
@@ -86,4 +88,19 @@ public class EjerciciosJava {
 		}
 	}
 
+	public void Decodificar() {
+		String cadenaInicial = "3+4+3,4-7*1=";
+
+		String[] separado = cadenaInicial.split("(?<=[-+*/()])");
+		
+		for(int i = 0; i < separado.length; i++)
+		{
+			separado[i] = separado[i].replace("+", " +");
+			separado[i] = separado[i].replace("-", " -");
+			separado[i] = separado[i].replace("*", " *");
+			separado[i] = separado[i].replace("/", " /");
+			separado[i] = separado[i].replace("=", " =");
+			System.out.println(separado[i]);
+		}
+	}
 }

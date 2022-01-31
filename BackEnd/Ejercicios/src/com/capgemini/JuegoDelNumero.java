@@ -40,6 +40,7 @@ public class JuegoDelNumero {
 			return Comparacion.IGUAL;
 	}
 
+	
 	public int getIntentos() {
 		return intentos;
 	}
