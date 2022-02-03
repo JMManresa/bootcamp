@@ -1,22 +1,23 @@
 package com.capgemini;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
 import enums.Comparacion;
+import enums.PalosBarajaEsp;
 
 public class Principal {
 
 	public static void main(String[] args) {
 
 		Principal p = new Principal();
-		// e.Adivina();
-		// e.AdivinaConInterfaz();
-		p.IniciarCalculadora();
-		
+		// p.Adivina();
+		// p.AdivinaConInterfaz();
+		// p.IniciarCalculadora();
+		p.CrearBaraja();
 
 	}
 
@@ -53,7 +54,7 @@ public class Principal {
 
 	public void AdivinaConInterfaz() {
 		JuegoDelNumero j = new JuegoDelNumero();
-		
+
 		System.out.println("Solucion: " + j.getSolucion());
 		int numero;
 		String mensaje;
@@ -92,8 +93,62 @@ public class Principal {
 
 	public void IniciarCalculadora() {
 		Calculadora c = new Calculadora();
-		
-		String[] operaciones = c.decodificar(JOptionPane.showInputDialog("Introduce la cadena (debe terminar con el simbolo '='): "));
+
+		String[] operaciones = c
+				.decodificar(JOptionPane.showInputDialog("Introduce la cadena (debe terminar con el simbolo '='): "));
 		JOptionPane.showMessageDialog(null, "Resultado: " + c.calcular(operaciones));
+	}
+
+	public void CrearBaraja() {
+		Stack<Naipe> baraja = new Stack<>();
+		Naipe naipe;
+
+		int cont = 0;
+		for (int i = 1; i <= 48; i++) {
+
+			if (i == 13 || i == 25 || i == 37)
+				cont++;
+			
+			switch (cont) {
+				case 0: {
+					naipe = new Naipe(i, PalosBarajaEsp.BASTOS);
+					baraja.push(naipe);
+					break;
+				}
+				case 1: {
+					naipe = new Naipe(i - (cont * 12), PalosBarajaEsp.COPAS);
+					baraja.push(naipe);
+					break;
+				}
+				case 2: {
+					naipe = new Naipe(i - (cont * 12), PalosBarajaEsp.ESPADAS);
+					baraja.push(naipe);
+					break;
+				}
+				case 3: {
+					naipe = new Naipe(i - (cont * 12), PalosBarajaEsp.OROS);
+					baraja.push(naipe);
+					break;
+				}
+			}
+		}
+
+		Baraja barajaEsp = new BarajaEsp(baraja);
+
+		barajaEsp.MostrarBaraja();
+
+		System.out.println();
+		System.out.println("========== BARAJAMOS ==========");
+		System.out.println();
+
+		barajaEsp.Barajar();
+		barajaEsp.MostrarBaraja();
+		System.out.println();
+
+		Naipe aux;
+		for (int i = 0; i < 2; i++) {
+			aux = barajaEsp.Repartir();
+			System.out.println("Has cogido el " + aux.getValor() + " de " + aux.getPalo());
+		}
 	}
 }

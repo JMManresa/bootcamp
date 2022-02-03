@@ -1,23 +1,34 @@
 package com.capgemini;
 
-public class Baraja {
+import java.util.Collections;
+import java.util.Stack;
+
+public abstract class Baraja {
 	
-	private Naipe[] cartas;
+	private Stack<Naipe> naipes;
 	
-	public Baraja(Naipe[] cartas)
+	public Baraja(Stack<Naipe> naipes)
 	{
-		this.cartas = cartas;
+		this.naipes = naipes;
 	}
 	
 	public void Barajar() {
-		
+		Collections.shuffle(naipes);
 	}
 	
-	public void Repartir() {
-		
+	public Naipe Repartir() {
+		return naipes.pop();
 	}
 	
-	public void Comparar(Naipe a, Naipe b) {
+	public Naipe Comparar(Naipe a, Naipe b) {
+		return null;
+	}
+	
+	public void MostrarBaraja() {
+		for(int i = 0; i < naipes.size(); i++)
+		{
+			System.out.println(naipes.elementAt(i).getValor() + " de " + naipes.elementAt(i).getPalo());
+		}
 		
 	}
 }
