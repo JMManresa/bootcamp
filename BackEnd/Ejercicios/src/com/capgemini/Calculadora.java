@@ -3,35 +3,44 @@ package com.capgemini;
 public class Calculadora {
 
 	private double total = 0.0;
-	private char pendiente = '+'; //Variable que guarda el operador
+	private char pendiente = '+';
+
+	public double calcular(String[] operaciones) {
+
+		for (int i = 0; i < operaciones.length; i++) {
+			double operando = Double.parseDouble(operaciones[i].substring(0, operaciones[i].length() - 1));
+			char operador = operaciones[i].charAt(operaciones[i].length() - 1);
+
+			switch (pendiente) {
+				case '+':
+					total += operando;
+					break;
 	
-	public double calcular(double operando, char operador) {
-		
-		switch (pendiente) {
-		case '+':
-			total += operando;
-			break;
-			
-		case '-':
-			total -= operando;
-			break;
-			
-		case '*':
-			total *= operando;
-			break;
-			
-		case '/':
-			total /= operando;
-			break;
-		case '=':
-			total += operando;
-		
+				case '-':
+					total -= operando;
+					break;
+	
+				case '*':
+					total *= operando;
+					break;
+	
+				case '/':
+					total /= operando;
+					break;
+				case '=':
+					total += operando;
+
+			}
+			pendiente = operador;
+
 		}
-		pendiente = operador; //El actual operador lo asignamos a pendiente para
-		return total; //calcularlo en la próxima iteración
+
+		return total;
 	}
 
-	public void decodificar(String cadena) {
-
+	public String[] decodificar(String cadena) {
+		cadena = cadena.replace(",", ".");
+		String[] decodificada = cadena.split("(?<=[-+*/()])");
+		return decodificada;
 	}
 }

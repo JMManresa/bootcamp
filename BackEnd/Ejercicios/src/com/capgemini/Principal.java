@@ -8,14 +8,15 @@ import javax.swing.JOptionPane;
 
 import enums.Comparacion;
 
-public class EjerciciosJava {
+public class Principal {
 
 	public static void main(String[] args) {
 
-		EjerciciosJava e = new EjerciciosJava();
+		Principal p = new Principal();
 		// e.Adivina();
 		// e.AdivinaConInterfaz();
-		e.Decodificar();
+		p.IniciarCalculadora();
+		
 
 	}
 
@@ -89,22 +90,10 @@ public class EjerciciosJava {
 		}
 	}
 
-	public void Decodificar() {
-		String cadenaInicial = JOptionPane.showInputDialog("Introduce la cadena: ");
-		//String cadenaInicial = "3+4+3,4-7*1=";
-		cadenaInicial = cadenaInicial.replace(",", ".");
-		String[] separado = cadenaInicial.split("(?<=[-+*/()])");
-		
+	public void IniciarCalculadora() {
 		Calculadora c = new Calculadora();
-		double resultado = 0;
 		
-		for(int i = 0; i < separado.length; i++)
-		{
-			double operando = Double.parseDouble(separado[i].substring(0, separado[i].length() - 1));
-			char operador = separado[i].charAt(separado[i].length() - 1);
-			
-			resultado = c.calcular(operando, operador);
-		}
-		System.out.println(resultado);
+		String[] operaciones = c.decodificar(JOptionPane.showInputDialog("Introduce la cadena (debe terminar con el simbolo '='): "));
+		JOptionPane.showMessageDialog(null, "Resultado: " + c.calcular(operaciones));
 	}
 }
