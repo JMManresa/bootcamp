@@ -2,7 +2,7 @@ package com.example;
 
 public class CalculadoraCientifica extends Calculadora{
 
-	public double dividir(double a, double b) {
+	public static double dividir(double a, double b) {
 		
 		return a/b;
 	}

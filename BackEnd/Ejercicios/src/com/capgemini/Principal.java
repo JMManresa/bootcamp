@@ -2,12 +2,10 @@ package com.capgemini;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
 import enums.Comparacion;
-import enums.PalosBarajaEsp;
 
 public class Principal {
 
@@ -17,7 +15,7 @@ public class Principal {
 		// p.Adivina();
 		// p.AdivinaConInterfaz();
 		// p.IniciarCalculadora();
-		p.CrearBaraja();
+		p.CrearBarajaEsp();
 
 	}
 
@@ -99,56 +97,32 @@ public class Principal {
 		JOptionPane.showMessageDialog(null, "Resultado: " + c.calcular(operaciones));
 	}
 
-	public void CrearBaraja() {
-		Stack<Naipe> baraja = new Stack<>();
-		Naipe naipe;
-
-		int cont = 0;
-		for (int i = 1; i <= 48; i++) {
-
-			if (i == 13 || i == 25 || i == 37)
-				cont++;
-			
-			switch (cont) {
-				case 0: {
-					naipe = new Naipe(i, PalosBarajaEsp.BASTOS);
-					baraja.push(naipe);
-					break;
-				}
-				case 1: {
-					naipe = new Naipe(i - (cont * 12), PalosBarajaEsp.COPAS);
-					baraja.push(naipe);
-					break;
-				}
-				case 2: {
-					naipe = new Naipe(i - (cont * 12), PalosBarajaEsp.ESPADAS);
-					baraja.push(naipe);
-					break;
-				}
-				case 3: {
-					naipe = new Naipe(i - (cont * 12), PalosBarajaEsp.OROS);
-					baraja.push(naipe);
-					break;
-				}
-			}
-		}
-
-		Baraja barajaEsp = new BarajaEsp(baraja);
-
+	public void CrearBarajaEsp() {
+		Baraja barajaEsp = new BarajaEsp();
+		
+		System.out.println("Lista de cartas:");
+		System.out.println();
+		
 		barajaEsp.MostrarBaraja();
-
-		System.out.println();
-		System.out.println("========== BARAJAMOS ==========");
-		System.out.println();
-
 		barajaEsp.Barajar();
-		barajaEsp.MostrarBaraja();
+		
 		System.out.println();
-
-		Naipe aux;
-		for (int i = 0; i < 2; i++) {
-			aux = barajaEsp.Repartir();
-			System.out.println("Has cogido el " + aux.getValor() + " de " + aux.getPalo());
-		}
+		System.out.println("==== Barajamos ====");
+		System.out.println();
+		
+		System.out.println("Lista de cartas desordenada:");
+		System.out.println();
+		
+		barajaEsp.MostrarBaraja();
+		
+		System.out.println();
+		System.out.println("Retiramos las dos primeras cartas de la baraja: ");
+		System.out.println();
+		
+		Naipe aux = barajaEsp.Repartir();
+		System.out.println(aux.getValor() + " de " + aux.getPalo());
+		
+		aux = barajaEsp.Repartir();
+		System.out.println(aux.getValor() + " de " + aux.getPalo());
 	}
 }
