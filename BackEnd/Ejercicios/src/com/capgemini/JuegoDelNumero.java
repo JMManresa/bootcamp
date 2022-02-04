@@ -1,19 +1,18 @@
 package com.capgemini;
 
 import java.util.Random;
-import java.util.Scanner;
 
 import enums.Comparacion;
 
 public class JuegoDelNumero {
 
-	private int intentos, ultimaJugada, random;
+	int intentos, ultimaJugada, random;
 
 	public JuegoDelNumero() {
 		inicializar();
 	}
 
-	private void inicializar() {
+	public void inicializar() {
 		intentos = 10;
 		ultimaJugada = -1;
 		random = new Random().nextInt(101);
@@ -39,7 +38,6 @@ public class JuegoDelNumero {
 		else
 			return Comparacion.IGUAL;
 	}
-
 	
 	public int getIntentos() {
 		return intentos;

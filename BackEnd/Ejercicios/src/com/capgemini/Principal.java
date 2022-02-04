@@ -15,8 +15,18 @@ public class Principal {
 		// p.Adivina();
 		// p.AdivinaConInterfaz();
 		// p.IniciarCalculadora();
-		p.CrearBarajaEsp();
+		// p.CrearBarajaEsp();
+		
+		//EjercicioFactorial();
 
+	}
+
+	public static void EjercicioFactorial() {
+		Scanner teclado = new Scanner(System.in);
+		
+		System.out.print("Introduce un numero: ");
+		int num = Integer.parseInt(teclado.nextLine());
+		System.out.println(num);
 	}
 
 	public void Adivina() {
@@ -99,29 +109,29 @@ public class Principal {
 
 	public void CrearBarajaEsp() {
 		Baraja barajaEsp = new BarajaEsp();
-		
+
 		System.out.println("Lista de cartas:");
 		System.out.println();
-		
+
 		barajaEsp.MostrarBaraja();
 		barajaEsp.Barajar();
-		
+
 		System.out.println();
 		System.out.println("==== Barajamos ====");
 		System.out.println();
-		
+
 		System.out.println("Lista de cartas desordenada:");
 		System.out.println();
-		
+
 		barajaEsp.MostrarBaraja();
-		
+
 		System.out.println();
 		System.out.println("Retiramos las dos primeras cartas de la baraja: ");
 		System.out.println();
-		
+
 		Naipe aux = barajaEsp.Repartir();
 		System.out.println(aux.getValor() + " de " + aux.getPalo());
-		
+
 		aux = barajaEsp.Repartir();
 		System.out.println(aux.getValor() + " de " + aux.getPalo());
 	}

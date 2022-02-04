@@ -6,6 +6,9 @@ import enums.PalosBarajaEsp;
 
 public class BarajaEsp extends Baraja {
 
+	static final int NUM_CARTAS = 48;
+	static final int CARTAS_POR_PALO = 12;
+	
 	public BarajaEsp() {
 		Inicializar();
 	}
@@ -14,25 +17,25 @@ public class BarajaEsp extends Baraja {
 		naipes = new Stack<>();
 
 		int cont = 0;
-		for (int i = 1; i <= 48; i++) {
-			if (i == 13 || i == 25 || i == 37)
+		for (int i = 0; i < NUM_CARTAS; i++) {
+			if (i == 12 || i == 24 || i == 36)
 				cont++;
 
 			switch (cont) {
 				case 0: {
-					naipes.push(new Naipe(i, PalosBarajaEsp.BASTOS));
+					naipes.push(new Naipe(i+1, PalosBarajaEsp.BASTOS));
 					break;
 				}
 				case 1: {
-					naipes.push(new Naipe(i - (cont * 12), PalosBarajaEsp.COPAS));
+					naipes.push(new Naipe(i+1 - (cont * 12), PalosBarajaEsp.COPAS));
 					break;
 				}
 				case 2: {
-					naipes.push(new Naipe(i - (cont * 12), PalosBarajaEsp.ESPADAS));
+					naipes.push(new Naipe(i+1 - (cont * 12), PalosBarajaEsp.ESPADAS));
 					break;
 				}
 				case 3: {
-					naipes.push(new Naipe(i - (cont * 12), PalosBarajaEsp.OROS));
+					naipes.push(new Naipe(i+1 - (cont * 12), PalosBarajaEsp.OROS));
 					break;
 				}
 			}
