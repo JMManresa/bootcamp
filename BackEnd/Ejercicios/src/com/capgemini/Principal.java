@@ -12,21 +12,30 @@ public class Principal {
 	public static void main(String[] args) {
 
 		Principal p = new Principal();
-		// p.Adivina();
-		// p.AdivinaConInterfaz();
-		// p.IniciarCalculadora();
-		// p.CrearBarajaEsp();
-		
-		//EjercicioFactorial();
+//		p.Adivina();
+//		p.AdivinaConInterfaz();
+//		p.IniciarCalculadora();
+		p.CrearBarajaEsp();
+//
+//		EjercicioFactorial();
 
 	}
 
 	public static void EjercicioFactorial() {
+		int resultado = 1;
+
 		Scanner teclado = new Scanner(System.in);
-		
+
 		System.out.print("Introduce un numero: ");
 		int num = Integer.parseInt(teclado.nextLine());
-		System.out.println(num);
+
+		for (int i = 1; i <= num; i++) {
+			resultado *= i;
+		}
+		System.out.println("El factorial es: " + resultado);
+
+		teclado.close();
+
 	}
 
 	public void Adivina() {
@@ -108,31 +117,8 @@ public class Principal {
 	}
 
 	public void CrearBarajaEsp() {
-		Baraja barajaEsp = new BarajaEsp();
-
-		System.out.println("Lista de cartas:");
-		System.out.println();
-
-		barajaEsp.MostrarBaraja();
-		barajaEsp.Barajar();
-
-		System.out.println();
-		System.out.println("==== Barajamos ====");
-		System.out.println();
-
-		System.out.println("Lista de cartas desordenada:");
-		System.out.println();
-
-		barajaEsp.MostrarBaraja();
-
-		System.out.println();
-		System.out.println("Retiramos las dos primeras cartas de la baraja: ");
-		System.out.println();
-
-		Naipe aux = barajaEsp.Repartir();
-		System.out.println(aux.getValor() + " de " + aux.getPalo());
-
-		aux = barajaEsp.Repartir();
-		System.out.println(aux.getValor() + " de " + aux.getPalo());
+		Baraja baraja = new BarajaEsp();
+		
+		baraja.Repartir(49);
 	}
 }
