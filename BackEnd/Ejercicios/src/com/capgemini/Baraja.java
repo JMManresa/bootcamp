@@ -11,6 +11,13 @@ public abstract class Baraja {
 	public Baraja() {
 
 	}
+	
+	public static boolean sonIguales(Naipe a, Naipe b) {
+		if(a.getValor() == b.getValor() && a.getPalo() == b.getPalo()) {
+			return true;
+		}
+		else return false;
+	}
 
 	public void Barajar() {
 		Collections.shuffle(naipes);
@@ -28,9 +35,4 @@ public abstract class Baraja {
 	
 	public abstract Naipe Comparar(Naipe a, Naipe b);
 	
-//	public void MostrarBaraja() {
-//	for (int i = 0; i < naipes.size(); i++) {
-//		System.out.println(naipes.elementAt(i).getValor() + " de " + naipes.elementAt(i).getPalo());
-//	}
-//}
 }

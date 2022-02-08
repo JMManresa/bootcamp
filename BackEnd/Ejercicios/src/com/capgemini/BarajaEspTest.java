@@ -26,11 +26,30 @@ class BarajaEspTest {
 
 	@Test
 	void testBarajar() {
-		fail("Not yet implemented");
+		ArrayList<Naipe> barajada = new ArrayList<>();
+		ArrayList<Naipe> sinBarajar = new ArrayList<>();
+		
+		for(int i = 0; i < 5; i++) {
+			sinBarajar.add(baraja.naipes.get(i));
+		}
+		
+		baraja.Barajar();
+		
+		for(int i = 0; i < 5; i++) {
+			barajada.add(baraja.naipes.get(i));
+		}
+		
+		assertAll("Iguales",
+				() -> assertFalse(Baraja.sonIguales(barajada.get(0), sinBarajar.get(0))),
+				() -> assertFalse(Baraja.sonIguales(barajada.get(1), sinBarajar.get(1))),
+				() -> assertFalse(Baraja.sonIguales(barajada.get(2), sinBarajar.get(2))),
+				() -> assertFalse(Baraja.sonIguales(barajada.get(2), sinBarajar.get(3))),
+				() -> assertFalse(Baraja.sonIguales(barajada.get(2), sinBarajar.get(4)))
+				);
 	}
 	
 	@Test
-	void testNumCartasPalo() {
+	void testNumCartas() {
 		var numCartasBastos = baraja.naipes.stream().filter(item -> item.getPalo() == PalosBarajaEsp.BASTOS).count();
 		var numCartasCopas = baraja.naipes.stream().filter(item -> item.getPalo() == PalosBarajaEsp.COPAS).count();
 		var numCartasEspadas = baraja.naipes.stream().filter(item -> item.getPalo() == PalosBarajaEsp.ESPADAS).count();
