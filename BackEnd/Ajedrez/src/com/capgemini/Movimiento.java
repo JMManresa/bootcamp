@@ -3,10 +3,13 @@ package com.capgemini;
 public class Movimiento {
 	private Posicion posIni, posFin;
 
-	public Movimiento(String cadena) throws Exception {
+	public Movimiento(String NotacionInternacional) throws JuegoException {
 		// TODO
-		if(cadena.length() > 4)
-			throw new Exception();
+		if(NotacionInternacional == null || NotacionInternacional.length() > 4)
+			throw new IllegalArgumentException("La cadena debe tener 4 dígitos");
+		
+		posIni = new Posicion(NotacionInternacional.charAt(0), NotacionInternacional.charAt(1));
+		posFin = new Posicion(NotacionInternacional.charAt(2), NotacionInternacional.charAt(3));
 	}
 
 	public boolean EsVertical() {

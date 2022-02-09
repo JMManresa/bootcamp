@@ -9,12 +9,12 @@ import enums.Comparacion;
 
 public class Principal {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
-//		Principal p = new Principal();
+		Principal p = new Principal();
 //		p.Adivina();
 //		p.AdivinaConInterfaz();
-//		p.IniciarCalculadora();
+		p.IniciarCalculadora();
 //		EjercicioFactorial();
 
 	}
@@ -106,12 +106,10 @@ public class Principal {
 		}
 	}
 
-	public void IniciarCalculadora() {
+	public void IniciarCalculadora() throws Exception {
 		Calculadora c = new Calculadora();
 
-		String[] operaciones = c
-				.decodificar(JOptionPane.showInputDialog("Introduce la cadena (debe terminar con el simbolo '='): "));
+		String[] operaciones = c.decodificar(c.ObtenerCalculo());
 		JOptionPane.showMessageDialog(null, "Resultado: " + c.calcular(operaciones));
 	}
-
 }

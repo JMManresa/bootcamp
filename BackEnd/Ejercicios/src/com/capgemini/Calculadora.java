@@ -1,5 +1,9 @@
 package com.capgemini;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 public class Calculadora {
 
 	private double total = 0.0;
@@ -12,29 +16,27 @@ public class Calculadora {
 			char operador = operaciones[i].charAt(operaciones[i].length() - 1);
 
 			switch (pendiente) {
-				case '+':
-					total += operando;
-					break;
-	
-				case '-':
-					total -= operando;
-					break;
-	
-				case '*':
-					total *= operando;
-					break;
-	
-				case '/':
-					total /= operando;
-					break;
-				case '=':
-					total += operando;
+			case '+':
+				total += operando;
+				break;
+
+			case '-':
+				total -= operando;
+				break;
+
+			case '*':
+				total *= operando;
+				break;
+
+			case '/':
+				total /= operando;
+				break;
+			case '=':
+				total += operando;
 
 			}
 			pendiente = operador;
-
 		}
-
 		return total;
 	}
 
@@ -42,5 +44,33 @@ public class Calculadora {
 		cadena = cadena.replace(",", ".");
 		String[] decodificada = cadena.split("(?<=[-+*/()])");
 		return decodificada;
+	}
+
+	public String ObtenerCalculo() throws Exception {
+
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		String linea = null;
+		
+		try {
+			archivo = new File("C:\\Repositorio Bootcamp\\BackEnd\\Ejercicios\\calcular.txt");
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+
+			linea = br.readLine();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	         try {                    
+	            if( null != fr ) {   
+	               fr.close();     
+	            }                  
+	         }catch (Exception e2){ 
+	            e2.printStackTrace();
+	         }
+		}
+		return linea;
 	}
 }
