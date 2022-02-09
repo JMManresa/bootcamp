@@ -19,4 +19,8 @@ public class Naipe {
 	public PalosBarajaEsp getPalo() {
 		return palo;
 	}
+	
+	public void cosa(int i) {
+		System.out.println(PalosBarajaEsp.getEnum(i));
+	}
 }

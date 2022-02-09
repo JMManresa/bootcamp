@@ -26,10 +26,13 @@ public abstract class Baraja {
 	public ArrayList<Naipe> Repartir(int numRepartos) {
 		if(numRepartos > naipes.size() || numRepartos < 1)
 			throw new IllegalArgumentException("Numero de repartos no permitido");
+		
 		ArrayList<Naipe> reparto = new ArrayList<>();
+		
 		for (int i = 0; i < numRepartos; i++) {
 			reparto.add(naipes.pop());
 		}
+		
 		return reparto;
 	}
 	

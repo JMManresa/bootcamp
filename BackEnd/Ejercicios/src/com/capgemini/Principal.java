@@ -11,12 +11,10 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		Principal p = new Principal();
+//		Principal p = new Principal();
 //		p.Adivina();
 //		p.AdivinaConInterfaz();
 //		p.IniciarCalculadora();
-		p.CrearBarajaEsp();
-//
 //		EjercicioFactorial();
 
 	}
@@ -116,9 +114,4 @@ public class Principal {
 		JOptionPane.showMessageDialog(null, "Resultado: " + c.calcular(operaciones));
 	}
 
-	public void CrearBarajaEsp() {
-		Baraja baraja = new BarajaEsp();
-		
-		baraja.Repartir(49);
-	}
 }
