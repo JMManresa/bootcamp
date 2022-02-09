@@ -3,16 +3,10 @@ package com.capgemini;
 public class Movimiento {
 	private Posicion posIni, posFin;
 
-	public Movimiento(String cadena) {
+	public Movimiento(String cadena) throws Exception {
 		// TODO
-	}
-
-	public Posicion GetPosicionInicial() {
-		return posIni;
-	}
-
-	public Posicion GetPosicionFinal() {
-		return posFin;
+		if(cadena.length() > 4)
+			throw new Exception();
 	}
 
 	public boolean EsVertical() {
@@ -28,20 +22,36 @@ public class Movimiento {
 	}
 
 	public int SaltoVertical() { // cantidad de filas entre posFin y posIni
-		return posFin.GetFila() - posIni.GetFila();
+		return Math.abs(posFin.GetFila() - posIni.GetFila());
 	}
 
 	public int SaltoHorizontal() { // cantidad de casillas entre posFin y posIni
-		return posFin.GetColumna() - posIni.GetColumna();
+		return Math.abs(posFin.GetColumna() - posIni.GetColumna());
 	}
 
-	public int DeltaFila() { // lo que hay que sumar o restar para llegar a la posicion
-		//TODO
-		return 0;
+	public int DeltaFila() {
+		if(posIni.GetFila() < posFin.GetFila())
+			return 1;
+		else if(posIni.GetFila() > posFin.GetFila())
+			return -1;
+		else
+			return 0;
 	}
 
 	public int DeltaColumna() {
-		// TODO
-		return 0;
+		if(posIni.GetColumna() < posFin.GetColumna())
+			return 1;
+		else if(posIni.GetColumna() > posFin.GetColumna())
+			return -1;
+		else
+			return 0;
+	}
+	
+	public Posicion GetPosicionInicial() {
+		return posIni;
+	}
+
+	public Posicion GetPosicionFinal() {
+		return posFin;
 	}
 }

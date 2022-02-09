@@ -3,16 +3,11 @@ package com.capgemini;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PosicionTest {
-	Posicion posicion;
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
+	Posicion posicion, posicion2;
 
 	@Nested
 	class Constructores {
@@ -61,28 +56,15 @@ class PosicionTest {
 	
 
 	@Test
-	void testGetFila() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetFila() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetColumna() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetColumna() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testEquals() {
-		fail("Not yet implemented");
+		posicion = new Posicion(2, 5);
+		posicion2 = new Posicion('B', '5');
+		
+		assertAll("Comparacion",
+				() -> assertFalse(posicion.equals(posicion2)),
+				() -> assertFalse(posicion2.equals(posicion)),
+				() -> assertTrue(posicion.equals(posicion))
+				);
 	}
 
 }
