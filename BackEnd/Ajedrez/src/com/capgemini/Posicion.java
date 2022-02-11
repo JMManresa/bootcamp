@@ -16,8 +16,7 @@ public class Posicion {
 	}
 
 	private void CreaPosicion(int fila, int columna) {
-		if (!Validacion(fila, columna))
-			throw new IllegalArgumentException("La fila y la columna deben ser valores entre 1 y 8");
+		Validacion(fila, columna);
 
 		this.fila = fila;
 		this.columna = columna;
@@ -32,10 +31,11 @@ public class Posicion {
 	}
 
 	public boolean Equals(Posicion pos) {
-		return this == pos;
+		return (this.GetFila() == pos.GetFila() && this.GetColumna() == pos.GetColumna());
 	}
 
-	private boolean Validacion(int fila, int columna) {
-		return (fila >= 1 && fila <= 8 && columna >= 1 && columna <= 8);
+	private void Validacion(int fila, int columna) {
+		if (fila < 1 || fila > 8 || columna < 1 || columna > 8)
+			throw new IllegalArgumentException("La fila y la columna deben estar entre 0 y 8");
 	}
 }

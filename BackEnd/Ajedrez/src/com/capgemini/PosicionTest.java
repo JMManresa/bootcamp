@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PosicionTest {
-	Posicion posicion, posicion2;
+	Posicion posicion, posicion2, posicion3;
 
 	@Nested
 	class Constructores {
@@ -59,11 +59,13 @@ class PosicionTest {
 	void testEquals() {
 		posicion = new Posicion(2, 5);
 		posicion2 = new Posicion('B', '5');
+		posicion3 = new Posicion(4,1);
 		
 		assertAll("Comparacion",
-				() -> assertFalse(posicion.equals(posicion2)),
-				() -> assertFalse(posicion2.equals(posicion)),
-				() -> assertTrue(posicion.equals(posicion))
+				() -> assertTrue(posicion.Equals(posicion2)),
+				() -> assertTrue(posicion2.Equals(posicion)),
+				() -> assertFalse(posicion3.Equals(posicion)),
+				() -> assertFalse(posicion2.Equals(posicion3))
 				);
 	}
 

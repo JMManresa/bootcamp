@@ -43,6 +43,9 @@ public class Calculadora {
 	public String[] decodificar(String cadena) {
 		cadena = cadena.replace(",", ".");
 		String[] decodificada = cadena.split("(?<=[-+*/()])");
+		for (int i = 0; i < decodificada.length; i++) {
+			System.out.println(decodificada[i]);
+		}
 		return decodificada;
 	}
 
@@ -52,25 +55,29 @@ public class Calculadora {
 		FileReader fr = null;
 		BufferedReader br = null;
 		String linea = null;
-		
+
 		try {
 			archivo = new File("C:\\Repositorio Bootcamp\\BackEnd\\Ejercicios\\calcular.txt");
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 
 			linea = br.readLine();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-	         try {                    
-	            if( null != fr ) {   
-	               fr.close();     
-	            }                  
-	         }catch (Exception e2){ 
-	            e2.printStackTrace();
-	         }
+			try {
+				if (null != fr) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 		return linea;
+	}
+	
+	public void EscribeResultado() {
+		
 	}
 }
