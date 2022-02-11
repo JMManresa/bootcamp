@@ -18,19 +18,19 @@ class PosicionTest {
 					() -> assertEquals(1, new Posicion(1, 1).GetColumna()),
 					() -> assertEquals(8, new Posicion(8, 8).GetFila()),
 					() -> assertEquals(8, new Posicion(8, 8).GetColumna()),
-					() -> assertEquals(3, new Posicion(3, 5).GetFila()),
-					() -> assertEquals(5, new Posicion(3, 5).GetColumna())
+					() -> assertEquals(5, new Posicion(3, 5).GetFila()),
+					() -> assertEquals(3, new Posicion(3, 5).GetColumna())
 					);
 		}
 
 		@Test
 		void char_char() {
 			assertAll("Posiciones validas",
-					() -> assertEquals(1, new Posicion('A', '2').GetFila()),
-					() -> assertEquals(1, new Posicion('a', '2').GetFila()),
-					() -> assertEquals(2, new Posicion('A', '2').GetColumna()),
-					() -> assertEquals(8, new Posicion('H', '8').GetFila()),
-					() -> assertEquals(3, new Posicion('D', '3').GetColumna())
+					() -> assertEquals(1, new Posicion('A', '2').GetColumna()),
+					() -> assertEquals(1, new Posicion('a', '2').GetColumna()),
+					() -> assertEquals(2, new Posicion('A', '2').GetFila()),
+					() -> assertEquals(8, new Posicion('H', '8').GetColumna()),
+					() -> assertEquals(3, new Posicion('D', '3').GetFila())
 					);
 		}
 		

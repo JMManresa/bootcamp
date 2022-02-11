@@ -13,7 +13,7 @@ public abstract class Pieza {
 		return color;
 	}
 
-	public void Mover(Movimiento movimiento, Tablero tablero) {
+	public void Mover(Movimiento movimiento, Tablero tablero) throws JuegoException {
 		if (movimiento == null || tablero == null)
 			throw new NullPointerException();
 		tablero.Mover(movimiento);
