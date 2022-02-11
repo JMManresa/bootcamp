@@ -8,8 +8,8 @@ public class Juego {
 	private Color turno;
 	private boolean partidaActiva = false;
 
-	public Tablero GetTablero() {
-		return tablero;
+	public Tablero GetTablero() {		
+		return (Tablero) tablero.Clone();
 	}
 
 	public Color GetTurno() {
