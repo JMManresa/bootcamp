@@ -10,8 +10,10 @@ public class Torre extends Pieza{
 
 	@Override
 	protected boolean EsValido(Movimiento movimiento, Tablero tablero) {
-		// TODO Auto-generated method stub
-		return false;
+		if (movimiento == null || tablero == null)
+			throw new NullPointerException("Movimiento o tablero null");
+		
+		return (movimiento.EsHorizontal() || movimiento.EsVertical());
 	}
 
 }

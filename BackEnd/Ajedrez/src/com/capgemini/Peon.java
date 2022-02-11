@@ -10,7 +10,13 @@ public class Peon extends Pieza{
 
 	@Override
 	protected boolean EsValido(Movimiento movimiento, Tablero tablero) {
-		// TODO Auto-generated method stub
+		// TODO
+		if(movimiento == null || tablero == null)
+			throw new NullPointerException("El movimiento o el tablero son null");
+		
+		if(PuedeComer(movimiento, tablero)) {
+			
+		}
 		return false;
 	}
 
@@ -26,6 +32,10 @@ public class Peon extends Pieza{
 	
 	private boolean PuedeComer(Movimiento movimiento, Tablero tablero) {
 		//TODO
+		if(movimiento == null || tablero == null)
+			throw new NullPointerException("El movimiento o el tablero son null");
+		
+		
 		return false;
 	}
 	

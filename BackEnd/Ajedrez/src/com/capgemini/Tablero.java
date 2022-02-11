@@ -6,31 +6,24 @@ public class Tablero {
 	private Pieza[][] piezas = new Pieza[8][8];
 
 	public Pieza GetEscaque(int fila, int columna) {
-		Validacion(fila, columna);
 
-		if (piezas[fila][columna] == null)
+		if (!HayPieza(fila, columna))
 			throw new NullPointerException("No hay pieza en este escaque.");
-
-		return piezas[fila][columna];
+		else
+			return piezas[fila][columna];
 	}
 
 	public Pieza GetEscaque(Posicion posicion) {
-		if (posicion == null)
-			throw new NullPointerException();
+		if (posicion == null || !HayPieza(posicion))
+			throw new NullPointerException("La posicion es null o no hay pieza en esa posicion");
 
 		int fila = posicion.GetFila(), columna = posicion.GetColumna();
-
-		if (piezas[fila][columna] == null)
-			throw new NullPointerException("No hay pieza en este escaque.");
-
 		return piezas[fila][columna];
 	}
 
 	public void SetEscaque(Pieza pieza, int fila, int columna) throws JuegoException {
 		if (pieza == null)
-			throw new NullPointerException();
-
-		Validacion(fila, columna);
+			throw new NullPointerException("Pieza null");
 
 		if (HayPieza(fila, columna)) {
 			if (GetColorEscaque(fila, columna) != pieza.GetColor()) { // Hay pieza enemiga, comer pieza
@@ -46,7 +39,7 @@ public class Tablero {
 
 	public void SetEscaque(Pieza pieza, Posicion posicion) throws JuegoException {
 		if (pieza == null || posicion == null)
-			throw new NullPointerException();
+			throw new NullPointerException("Pieza y/o posicion null");
 
 		SetEscaque(pieza, posicion.GetFila(), posicion.GetColumna());
 	}
@@ -64,15 +57,14 @@ public class Tablero {
 
 	public boolean HayPieza(Posicion posicion) {
 		if (posicion == null)
-			throw new NullPointerException();
+			throw new NullPointerException("Posicion null");
 
-		return piezas[posicion.GetFila()][posicion.GetColumna()] != null;
+		return HayPieza(posicion.GetFila(), posicion.GetColumna());
 	}
 
 	public void QuitaPieza(int fila, int columna) {
-		Validacion(fila, columna);
 
-		if (piezas[fila][columna] == null)
+		if (!HayPieza(fila, columna))
 			throw new NullPointerException("El escaque ya estaba vacío.");
 		else
 			piezas[fila][columna] = null;
@@ -80,13 +72,17 @@ public class Tablero {
 
 	public void QuitaPieza(Posicion posicion) {
 		if (posicion == null)
-			throw new NullPointerException();
+			throw new NullPointerException("Posicion null");
 
 		QuitaPieza(posicion.GetFila(), posicion.GetColumna());
 	}
 
-	public void Mover(Movimiento movimiento) {
+	public void Mover(Movimiento movimiento) { //debería pasar por parametro tambien una pieza??
 		// TODO
+		if(movimiento == null)
+			throw new NullPointerException("Movimiento null");
+		
+		
 	}
 
 	public Object Clone() {
@@ -95,8 +91,7 @@ public class Tablero {
 	}
 
 	public Color GetColorEscaque(int fila, int columna) {
-		Validacion(fila, columna);
-		if (piezas[fila][columna] == null)
+		if (!HayPieza(fila, columna))
 			throw new NullPointerException("Casilla vacía");
 		else
 			return piezas[fila][columna].GetColor();
@@ -104,7 +99,7 @@ public class Tablero {
 
 	public boolean HayPiezasEntre(Movimiento movimiento) {
 		if (movimiento == null)
-			throw new NullPointerException();
+			throw new NullPointerException("Movimiento null");
 		
 		int filaIni = movimiento.GetPosicionInicial().GetFila(),
 			columnaIni = movimiento.GetPosicionInicial().GetColumna(),
