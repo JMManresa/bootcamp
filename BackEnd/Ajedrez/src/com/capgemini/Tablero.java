@@ -14,26 +14,29 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param columna
-	 * @param fila
-	 * @return
+	 * @param columna Valor entero entre 1 y 8.
+	 * @param fila Valor entero entre 1 y 8.
+	 * @return Devuelve la pieza en la posición indicada si la hubiera.
+	 * @throws JuegoException Si no hay pieza en la posición indicada.
 	 */
-	public Pieza GetEscaque(int columna, int fila) {
-
-		if (!HayPieza(columna, fila))
-			throw new NullPointerException("No hay pieza en este escaque.");
-		else
-			return tablero[columna - 1][fila - 1];
+	public Pieza GetEscaque(int columna, int fila) throws JuegoException {
+		
+		Posicion posicion = new Posicion(columna, fila);
+		return GetEscaque(posicion);
 	}
 
 	/**
 	 * 
-	 * @param posicion
-	 * @return
+	 * @param posicion Objeto de tipo Posicion.
+	 * @return Devuelve la pieza en la posición indicada si la hubiera.
+	 * @throws JuegoException Si no hay pieza en la posición indicada.
 	 */
-	public Pieza GetEscaque(Posicion posicion) {
-		if (posicion == null || !HayPieza(posicion))
+	public Pieza GetEscaque(Posicion posicion) throws JuegoException {
+		if (posicion == null)
 			throw new NullPointerException("La posicion es null o no hay pieza en esa posicion");
+		
+		if(!HayPieza(posicion))
+			throw new JuegoException("No hay pieza en este escaque.");
 
 		int columna = posicion.GetColumna(), fila = posicion.GetFila();
 		return tablero[columna - 1][fila - 1];
@@ -41,10 +44,10 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param columna
-	 * @param fila
-	 * @param pieza
-	 * @throws JuegoException
+	 * @param columna Valor entero entre 1 y 8.
+	 * @param fila Valor entero entre 1 y 8.
+	 * @param pieza Objeto de tipo Pieza.
+	 * @throws JuegoException Si se intenta colocar una pieza en el lugar donde ya hay otra del mismo color.
 	 */
 	public void SetEscaque(int columna, int fila, Pieza pieza) throws JuegoException {
 		if (pieza == null)
@@ -64,9 +67,9 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param posicion
-	 * @param pieza
-	 * @throws JuegoException
+	 * @param posicion Objeto de tipo Posicion.
+	 * @param pieza Objeto de tipo Pieza.
+	 * @throws JuegoException Si se intenta colocar una pieza en el lugar donde ya hay otra del mismo color.
 	 */
 	public void SetEscaque(Posicion posicion, Pieza pieza) throws JuegoException {
 		if (pieza == null || posicion == null)
@@ -77,9 +80,9 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param columna
-	 * @param fila
-	 * @return
+	 * @param columna Valor entero entre 1 y 8.
+	 * @param fila Valor entero entre 1 y 8.
+	 * @return True si hay pieza en la posicion indicada, false en caso contrario.
 	 */
 	public boolean HayPieza(int columna, int fila) {
 		Validacion(columna, fila);
@@ -89,8 +92,8 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param posicion
-	 * @return
+	 * @param posicion Objeto de tipo Posicion.
+	 * @return True si hay pieza en la posicion indicada, false en caso contrario.
 	 */
 	public boolean HayPieza(Posicion posicion) {
 		if (posicion == null)
@@ -101,8 +104,8 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param columna
-	 * @param fila
+	 * @param columna Valor entero entre 1 y 8.
+	 * @param fila Valor entero entre 1 y 8.
 	 */
 	public void QuitaPieza(int columna, int fila) {
 
@@ -114,7 +117,7 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param posicion
+	 * @param posicion Objeto de tipo Posicion.
 	 */
 	public void QuitaPieza(Posicion posicion) {
 		if (posicion == null)
@@ -125,15 +128,15 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param movimiento
-	 * @throws JuegoException
+	 * @param movimiento Objeto de tipo Movimiento.
+	 * @throws JuegoException Si no hay una pieza que mover para ese movimiento o si es propagada por el método SetEscaque.
 	 */
 	public void Mover(Movimiento movimiento) throws JuegoException {
 		if (movimiento == null)
 			throw new NullPointerException("Movimiento null");
 
 		if (tablero[movimiento.GetPosicionInicial().GetColumna()][movimiento.GetPosicionInicial().GetFila()] == null)
-			throw new NullPointerException("No hay pieza para mover");
+			throw new JuegoException("No hay pieza para mover");
 
 //							posicion								pieza
 		SetEscaque(movimiento.GetPosicionFinal(), GetEscaque(movimiento.GetPosicionInicial()));
@@ -142,7 +145,7 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @return
+	 * @return Devuelve una copia del tablero.
 	 */
 	public Object Clone() {
 		Pieza[][] tableroClon = new Pieza[TAMAÑO_FILA][TAMAÑO_COLUMNA];
@@ -158,9 +161,9 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param columna
-	 * @param fila
-	 * @return
+	 * @param columna Valor entero entre 1 y 8.
+	 * @param fila Valor entero entre 1 y 8.
+	 * @return Devuelve el color del escaque indicado.
 	 */
 	public Color GetColorEscaque(int columna, int fila) {
 		if((columna % 2) == (fila % 2))
@@ -171,9 +174,9 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param movimiento
-	 * @return
-	 * @throws JuegoException
+	 * @param movimiento Objeto de tipo Movimiento.
+	 * @return Verdadero si hay una pieza entre la casilla inicial y la final del movimiento excluyendo a ambas, falso en caso contrario.
+	 * @throws JuegoException Si el movimiento no es vertical, horizontal o diagonal.
 	 */
 	public boolean HayPiezasEntre(Movimiento movimiento) throws JuegoException {
 		if (movimiento == null)
@@ -199,8 +202,8 @@ public class Tablero {
 
 	/**
 	 * 
-	 * @param columna
-	 * @param fila
+	 * @param columna Valor entero entre 1 y 8.
+	 * @param fila Valor entero entre 1 y 8.
 	 */
 	private void Validacion(int columna, int fila) {
 		if (columna < 1 || columna > 8 || fila < 1 || fila > 8)
