@@ -18,14 +18,34 @@ public class Juego {
 		return turno;
 	}
 
+	public void Jugada(String jugada) throws JuegoException {
+		Movimiento movimiento = new Movimiento(jugada);
+		Mover(movimiento);
+	}
+
+	private void Mover(Movimiento movimiento) throws JuegoException {
+		
+		Pieza pieza = tablero.GetEscaque(movimiento.GetPosicionInicial().GetColumna(), movimiento.GetPosicionInicial().GetFila());
+		
+		if(pieza.GetColor() != GetTurno())
+			throw new JuegoException("No puedes mover las piezas del rival.");
+		
+		if(tablero.HayPiezasEntre(movimiento))
+			throw new JuegoException("Hay piezas entre el movimiento.");
+		
+		pieza.Mover(movimiento, tablero);
+		CambiaTurno();
+	}
+
+	private void CambiaTurno() {
+		if (turno == Color.BLANCO)
+			turno = Color.NEGRO;
+		else
+			turno = Color.BLANCO;
+	}
+	
 	public void Inicializar() throws JuegoException {
 		Tablero tablero = new Tablero();
-
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 8; j++) {
-				
-			}
-		}
 
 		tablero.SetEscaque(1, 1, new Torre(Color.BLANCO));
 		tablero.SetEscaque(2, 1, new Caballo(Color.BLANCO));
@@ -62,24 +82,6 @@ public class Juego {
 		tablero.SetEscaque(8, 7, new Peon(Color.NEGRO));
 		
 		partidaActiva = true;
-	}
-
-	public void Jugada(String jugada) throws JuegoException {
-		// TODO
-		Movimiento movimiento = new Movimiento(jugada);
-		Mover(movimiento);
-		CambiaTurno();
-	}
-
-	private void Mover(Movimiento movimiento) {
-		// TODO
-	}
-
-	private void CambiaTurno() {
-		if (turno == Color.BLANCO)
-			turno = Color.NEGRO;
-		else
-			turno = Color.BLANCO;
 	}
 
 	private void PromocionarPeon(Object o) {

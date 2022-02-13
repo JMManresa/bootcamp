@@ -23,7 +23,7 @@ public class Tablero {
 		if (!HayPieza(columna, fila))
 			throw new NullPointerException("No hay pieza en este escaque.");
 		else
-			return tablero[columna][fila];
+			return tablero[columna - 1][fila - 1];
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class Tablero {
 			throw new NullPointerException("La posicion es null o no hay pieza en esa posicion");
 
 		int columna = posicion.GetColumna(), fila = posicion.GetFila();
-		return tablero[columna][fila];
+		return tablero[columna - 1][fila - 1];
 	}
 
 	/**
@@ -51,14 +51,14 @@ public class Tablero {
 			throw new NullPointerException("Pieza null");
 
 		if (HayPieza(columna, fila)) {
-			if (GetColorEscaque(columna, fila) != pieza.GetColor()) { // Hay pieza enemiga, comer pieza
+			if (GetEscaque(columna, fila).GetColor() != pieza.GetColor()) { // Hay pieza enemiga, comer pieza
 				QuitaPieza(columna, fila);
-				tablero[columna][fila] = pieza;
+				tablero[columna - 1][fila - 1] = pieza;
 			} else { // ya hay una pieza del mismo color
 				throw new JuegoException("Ya tienes una pieza en esa posicion");
 			}
 		} else { // la casilla está libre
-			tablero[columna][fila] = pieza;
+			tablero[columna - 1][fila - 1] = pieza;
 		}
 	}
 
@@ -84,7 +84,7 @@ public class Tablero {
 	public boolean HayPieza(int columna, int fila) {
 		Validacion(columna, fila);
 
-		return tablero[columna][fila] != null;
+		return tablero[columna - 1][fila - 1] != null;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class Tablero {
 		if (!HayPieza(columna, fila))
 			throw new NullPointerException("El escaque ya estaba vacío.");
 		else
-			tablero[columna][fila] = null;
+			tablero[columna - 1][fila - 1] = null;
 	}
 
 	/**
@@ -137,6 +137,7 @@ public class Tablero {
 
 //							posicion								pieza
 		SetEscaque(movimiento.GetPosicionFinal(), GetEscaque(movimiento.GetPosicionInicial()));
+		QuitaPieza(movimiento.GetPosicionInicial());
 	}
 
 	/**
@@ -162,10 +163,10 @@ public class Tablero {
 	 * @return
 	 */
 	public Color GetColorEscaque(int columna, int fila) {
-		if (!HayPieza(columna, fila))
-			throw new NullPointerException("Casilla vacía");
+		if((columna % 2) == (fila % 2))
+			return Color.BLANCO;
 		else
-			return tablero[columna][fila].GetColor();
+			return Color.NEGRO;
 	}
 
 	/**
@@ -186,7 +187,7 @@ public class Tablero {
 			columnaFin = movimiento.GetPosicionFinal().GetColumna(), filaFin = movimiento.GetPosicionFinal().GetFila(),
 			siguienteColumna = columnaIni, siguienteFila = filaIni;
 
-		while (columnaFin != siguienteColumna && filaFin != siguienteFila) {
+		while (columnaFin - 1 != siguienteColumna && filaFin - 1 != siguienteFila) {
 			siguienteColumna += movimiento.DeltaColumna();
 			siguienteFila += movimiento.DeltaFila();
 			if (HayPieza(siguienteColumna, siguienteFila)) {

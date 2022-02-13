@@ -16,7 +16,12 @@ public abstract class Pieza {
 	public void Mover(Movimiento movimiento, Tablero tablero) throws JuegoException {
 		if (movimiento == null || tablero == null)
 			throw new NullPointerException();
+
+		if (!EsValido(movimiento, tablero))
+			throw new JuegoException("Movimiento no válido para esta pieza");
+		
 		tablero.Mover(movimiento);
+
 	}
 
 	protected abstract boolean EsValido(Movimiento movimiento, Tablero tablero);
