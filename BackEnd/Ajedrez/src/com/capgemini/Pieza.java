@@ -24,5 +24,5 @@ public abstract class Pieza {
 
 	}
 
-	protected abstract boolean EsValido(Movimiento movimiento, Tablero tablero);
+	protected abstract boolean EsValido(Movimiento movimiento, Tablero tablero) throws JuegoException;
 }

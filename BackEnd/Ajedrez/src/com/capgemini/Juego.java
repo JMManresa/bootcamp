@@ -14,18 +14,23 @@ public class Juego {
 		return (Tablero) tablero.Clone();
 	}
 
-	public Color GetTurno() {
+	public Color GetTurno() throws JuegoException {
+		if(!partidaActiva)
+			throw new JuegoException("La partida aun no ha comenzado.");
 		return turno;
 	}
 
 	public void Jugada(String jugada) throws JuegoException {
+		if(!partidaActiva)
+			throw new JuegoException("La partida aun no ha comenzado.");
+		
 		Movimiento movimiento = new Movimiento(jugada);
 		Mover(movimiento);
 	}
 
 	private void Mover(Movimiento movimiento) throws JuegoException {
 		
-		Pieza pieza = tablero.GetEscaque(movimiento.GetPosicionInicial().GetColumna(), movimiento.GetPosicionInicial().GetFila());
+		Pieza pieza = tablero.GetEscaque(movimiento.GetPosicionInicial());
 		
 		if(pieza.GetColor() != GetTurno())
 			throw new JuegoException("No puedes mover las piezas del rival.");
@@ -82,6 +87,7 @@ public class Juego {
 		tablero.SetEscaque(8, 7, new Peon(Color.NEGRO));
 		
 		partidaActiva = true;
+		turno = Color.BLANCO;
 	}
 
 	private void PromocionarPeon(Object o) {
