@@ -9,36 +9,48 @@ public class Juego {
 	private boolean partidaActiva = false;
 
 	public Tablero GetTablero() throws JuegoException {
-		if(!partidaActiva)
+		if (!partidaActiva)
 			throw new JuegoException("La partida aun no ha comenzado.");
 		return (Tablero) tablero.Clone();
 	}
 
 	public Color GetTurno() throws JuegoException {
-		if(!partidaActiva)
+		if (!partidaActiva)
 			throw new JuegoException("La partida aun no ha comenzado.");
 		return turno;
 	}
 
 	public void Jugada(String jugada) throws JuegoException {
-		if(!partidaActiva)
+		if (!partidaActiva)
 			throw new JuegoException("La partida aun no ha comenzado.");
-		
+
 		Movimiento movimiento = new Movimiento(jugada);
 		Mover(movimiento);
 	}
 
 	private void Mover(Movimiento movimiento) throws JuegoException {
-		
+
 		Pieza pieza = tablero.GetEscaque(movimiento.GetPosicionInicial());
-		
-		if(pieza.GetColor() != GetTurno())
+
+		if (pieza.GetColor() != GetTurno())
 			throw new JuegoException("No puedes mover las piezas del rival.");
-		
-		if(tablero.HayPiezasEntre(movimiento))
+
+		if (tablero.HayPiezasEntre(movimiento))
 			throw new JuegoException("Hay piezas entre el movimiento.");
-		
-		pieza.Mover(movimiento, tablero);
+
+		int columnaFin = movimiento.GetPosicionFinal().GetColumna(), filaFin = movimiento.GetPosicionFinal().GetFila();
+
+		if (tablero.HayPieza(columnaFin, filaFin)) {
+			if (tablero.GetEscaque(columnaFin, filaFin).GetColor() != pieza.GetColor()) { // Hay pieza enemiga, comer pieza
+				tablero.QuitaPieza(columnaFin, filaFin);
+				pieza.Mover(movimiento, tablero);
+			} else { // ya hay una pieza del mismo color
+				throw new JuegoException("Ya tienes una pieza en esa posicion");
+			}
+		} else { // la casilla está libre
+			pieza.Mover(movimiento, tablero);
+		}
+
 		CambiaTurno();
 	}
 
@@ -48,7 +60,7 @@ public class Juego {
 		else
 			turno = Color.BLANCO;
 	}
-	
+
 	public void Inicializar() throws JuegoException {
 		Tablero tablero = new Tablero();
 
@@ -85,7 +97,7 @@ public class Juego {
 		tablero.SetEscaque(6, 7, new Peon(Color.NEGRO));
 		tablero.SetEscaque(7, 7, new Peon(Color.NEGRO));
 		tablero.SetEscaque(8, 7, new Peon(Color.NEGRO));
-		
+
 		partidaActiva = true;
 		turno = Color.BLANCO;
 	}

@@ -33,7 +33,7 @@ public class Tablero {
 	 */
 	public Pieza GetEscaque(Posicion posicion) throws JuegoException {
 		if (posicion == null)
-			throw new NullPointerException("La posicion es null o no hay pieza en esa posicion");
+			throw new IllegalArgumentException("La posicion es null o no hay pieza en esa posicion");
 		
 		if(!HayPieza(posicion))
 			throw new JuegoException("No hay pieza en este escaque.");
@@ -51,18 +51,9 @@ public class Tablero {
 	 */
 	public void SetEscaque(int columna, int fila, Pieza pieza) throws JuegoException {
 		if (pieza == null)
-			throw new NullPointerException("Pieza null");
+			throw new IllegalArgumentException("Pieza null");
 
-		if (HayPieza(columna, fila)) {
-			if (GetEscaque(columna, fila).GetColor() != pieza.GetColor()) { // Hay pieza enemiga, comer pieza
-				QuitaPieza(columna, fila);
-				tablero[columna - 1][fila - 1] = pieza;
-			} else { // ya hay una pieza del mismo color
-				throw new JuegoException("Ya tienes una pieza en esa posicion");
-			}
-		} else { // la casilla está libre
 			tablero[columna - 1][fila - 1] = pieza;
-		}
 	}
 
 	/**
@@ -73,7 +64,7 @@ public class Tablero {
 	 */
 	public void SetEscaque(Posicion posicion, Pieza pieza) throws JuegoException {
 		if (pieza == null || posicion == null)
-			throw new NullPointerException("Pieza y/o posicion null");
+			throw new IllegalArgumentException("Pieza y/o posicion null");
 
 		SetEscaque(posicion.GetColumna(), posicion.GetFila(), pieza);
 	}
@@ -97,7 +88,7 @@ public class Tablero {
 	 */
 	public boolean HayPieza(Posicion posicion) {
 		if (posicion == null)
-			throw new NullPointerException("Posicion null");
+			throw new IllegalArgumentException("Posicion null");
 
 		return HayPieza(posicion.GetColumna(), posicion.GetFila());
 	}
@@ -110,7 +101,7 @@ public class Tablero {
 	public void QuitaPieza(int columna, int fila) {
 
 		if (!HayPieza(columna, fila))
-			throw new NullPointerException("El escaque ya estaba vacío.");
+			throw new IllegalArgumentException("El escaque ya estaba vacío.");
 		else
 			tablero[columna - 1][fila - 1] = null;
 	}
@@ -121,7 +112,7 @@ public class Tablero {
 	 */
 	public void QuitaPieza(Posicion posicion) {
 		if (posicion == null)
-			throw new NullPointerException("Posicion null");
+			throw new IllegalArgumentException("Posicion null");
 
 		QuitaPieza(posicion.GetColumna(), posicion.GetFila());
 	}
@@ -133,7 +124,7 @@ public class Tablero {
 	 */
 	public void Mover(Movimiento movimiento) throws JuegoException {
 		if (movimiento == null)
-			throw new NullPointerException("Movimiento null");
+			throw new IllegalArgumentException("Movimiento null");
 
 		if (tablero[movimiento.GetPosicionInicial().GetColumna()][movimiento.GetPosicionInicial().GetFila()] == null)
 			throw new JuegoException("No hay pieza para mover");
@@ -180,7 +171,7 @@ public class Tablero {
 	 */
 	public boolean HayPiezasEntre(Movimiento movimiento) throws JuegoException {
 		if (movimiento == null)
-			throw new NullPointerException("Movimiento null");
+			throw new IllegalArgumentException("Movimiento null");
 
 		if (!(movimiento.EsHorizontal() || movimiento.EsVertical()
 				|| (movimiento.EsDiagonal() && movimiento.SaltoHorizontal() == movimiento.SaltoVertical())))
@@ -190,7 +181,7 @@ public class Tablero {
 			columnaFin = movimiento.GetPosicionFinal().GetColumna(), filaFin = movimiento.GetPosicionFinal().GetFila(),
 			siguienteColumna = columnaIni, siguienteFila = filaIni;
 
-		while (columnaFin - 1 != siguienteColumna && filaFin - 1 != siguienteFila) {
+		while (columnaFin - 1 != siguienteColumna && filaFin - 1 != siguienteFila) { //los -1 son para no incluir la ultima posicion
 			siguienteColumna += movimiento.DeltaColumna();
 			siguienteFila += movimiento.DeltaFila();
 			if (HayPieza(siguienteColumna, siguienteFila)) {

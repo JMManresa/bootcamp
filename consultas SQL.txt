@@ -1,0 +1,50 @@
+-- Obtener todos los actores de nombre ‘NICK’.
+
+    	SELECT *
+    	FROM actor
+    	WHERE first_name = 'NICK'
+
+-- Obtener una lista con todos los distritos distintos (district en address).
+
+	SELECT DISTINCT district
+	FROM address
+
+-- Obtener las películas sobre agentes secretos (description contiene ‘Secret Agent’).
+
+	SELECT title, description
+	FROM film
+	WHERE description LIKE '%Secret Agent%'
+
+-- Mostrar la lista de las películas mas caras (coste por minuto).
+
+	SELECT title, rental_rate / length AS CostePorMinuto, rental_rate, length
+	FROM film
+	ORDER BY CostePorMinuto DESC
+
+-- Obtener los códigos y medias de gasto de los clientes que han gastado mas de 100 en menos de 25 operaciones.
+
+	SELECT c.customer_id, AVG(p.amount) AS mediaDeGasto
+	FROM customer c, rental r, payment p
+	WHERE c.customer_id = r.customer_id AND r.rental_id = p.rental_id
+	GROUP BY c.customer_id
+	HAVING COUNT(c.customer_id) < 25 AND SUM(p.amount) > 100
+
+-- Obtener los 5 nombres de actor más repetidos (aprox).
+
+	SELECT first_name, COUNT(first_name) AS numRepeticiones
+	FROM actor
+	GROUP BY first_name
+	ORDER BY numRepeticiones DESC
+	LIMIT 5
+
+-- Para felicitar el año nuevo chino se necesita el listado con los datos postales de los clientes residentes en China y Taiwan.
+
+	SELECT c.customer_id, a.postal_code, ctry.country
+	FROM customer c, address a, city ct, country ctry
+	WHERE c.address_id = a.address_id
+		AND a.city_id = ct.city_id
+		AND ct.country_id = ctry.country_id
+		AND (ctry.country = 'China' OR ctry.country = 'Taiwan')
+
+-- Mostrar los datos de las tiendas, conocidas por la ciudad y país donde están ubicadas, indicando el nombre del gerente, el numero de películas en inventario, el numero de títulos diferentes y el número de clientes atendidos.
+
