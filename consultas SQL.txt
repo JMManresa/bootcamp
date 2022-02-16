@@ -48,3 +48,14 @@
 
 -- Mostrar los datos de las tiendas, conocidas por la ciudad y país donde están ubicadas, indicando el nombre del gerente, el numero de películas en inventario, el numero de títulos diferentes y el número de clientes atendidos.
 
+	SELECT s.store_id, ct.city, ctry.country, st.first_name, st.last_name,
+		COUNT(i.film_id) AS numPelis, COUNT(DISTINCT i.film_id) AS numDifPelis,
+		(SELECT COUNT(c.customer_id) FROM customer c, store s WHERE c.store_id = s.store_id) AS numClientes
+	FROM store s, staff st, address a, city ct, country ctry, inventory i, film f
+	WHERE s.address_id = a.address_id
+		AND a.city_id = ct.city_id
+		AND ct.country_id = ctry.country_id
+		AND s.manager_staff_id = st.staff_id
+		AND s.store_id = i.store_id
+		AND i.film_id = f.film_id
+	GROUP BY s.store_id

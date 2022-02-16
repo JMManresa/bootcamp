@@ -1,7 +1,5 @@
 package com.capgemini;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import com.capgemini.Enum.Color;
 
 public class Peon extends Pieza {
