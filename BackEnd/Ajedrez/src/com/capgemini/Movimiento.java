@@ -30,7 +30,8 @@ public class Movimiento {
 	}
 
 	public boolean EsDiagonal() {
-		return ((posIni.GetFila() != posFin.GetFila()) && (posIni.GetColumna() != posFin.GetColumna()));
+		return SaltoHorizontal() == SaltoVertical();
+		//return ((posIni.GetFila() != posFin.GetFila()) && (posIni.GetColumna() != posFin.GetColumna()));
 	}
 
 	public int SaltoVertical() { // cantidad de filas entre posFin y posIni

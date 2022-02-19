@@ -13,7 +13,6 @@ public class Dama extends Pieza {
 		if (movimiento == null || tablero == null)
 			throw new NullPointerException("Movimiento o tablero null");
 
-		return (movimiento.EsHorizontal() || movimiento.EsVertical()
-				|| (movimiento.EsDiagonal() && movimiento.SaltoHorizontal() == movimiento.SaltoVertical()));
+		return movimiento.EsHorizontal() || movimiento.EsVertical() || movimiento.EsDiagonal();
 	}
 }

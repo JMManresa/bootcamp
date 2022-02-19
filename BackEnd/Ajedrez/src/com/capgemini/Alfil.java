@@ -9,11 +9,11 @@ public class Alfil extends Pieza {
 	}
 
 	@Override
-	protected boolean EsValido(Movimiento movimiento, Tablero tablero) {
+	protected boolean EsValido(Movimiento movimiento, Tablero tablero) throws JuegoException {
 		if (movimiento == null || tablero == null)
 			throw new NullPointerException("Movimiento o tablero null");
 		
-		return (movimiento.EsDiagonal() && movimiento.SaltoVertical() == movimiento.SaltoVertical());
+		return movimiento.EsDiagonal() && !tablero.HayPiezasEntre(movimiento);
 	}
 
 }

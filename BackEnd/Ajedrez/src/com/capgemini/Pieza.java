@@ -15,7 +15,7 @@ public abstract class Pieza {
 
 	public void Mover(Movimiento movimiento, Tablero tablero) throws JuegoException {
 		if (movimiento == null || tablero == null)
-			throw new NullPointerException();
+			throw new IllegalArgumentException();
 
 		if (!EsValido(movimiento, tablero))
 			throw new JuegoException("Movimiento no válido para esta pieza");

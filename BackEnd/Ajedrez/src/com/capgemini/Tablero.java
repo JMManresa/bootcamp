@@ -10,7 +10,7 @@ import com.capgemini.Enum.*;
 public class Tablero {
 	private final int TAMAÑO_FILA = 8;
 	private final int TAMAÑO_COLUMNA = 8;
-	private Pieza[][] tablero = new Pieza[TAMAÑO_COLUMNA][TAMAÑO_FILA];
+	private Pieza[][] piezas = new Pieza[TAMAÑO_COLUMNA][TAMAÑO_FILA];
 
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class Tablero {
 			throw new JuegoException("No hay pieza en este escaque.");
 
 		int columna = posicion.GetColumna(), fila = posicion.GetFila();
-		return tablero[columna - 1][fila - 1];
+		return piezas[columna - 1][fila - 1];
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class Tablero {
 		if (pieza == null)
 			throw new IllegalArgumentException("Pieza null");
 
-			tablero[columna - 1][fila - 1] = pieza;
+		piezas[columna - 1][fila - 1] = pieza;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Tablero {
 	public boolean HayPieza(int columna, int fila) {
 		Validacion(columna, fila);
 
-		return tablero[columna - 1][fila - 1] != null;
+		return piezas[columna - 1][fila - 1] != null;
 	}
 
 	/**
@@ -102,8 +102,8 @@ public class Tablero {
 
 		if (!HayPieza(columna, fila))
 			throw new IllegalArgumentException("El escaque ya estaba vacío.");
-		else
-			tablero[columna - 1][fila - 1] = null;
+
+		piezas[columna - 1][fila - 1] = null;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class Tablero {
 		if (movimiento == null)
 			throw new IllegalArgumentException("Movimiento null");
 
-		if (tablero[movimiento.GetPosicionInicial().GetColumna()][movimiento.GetPosicionInicial().GetFila()] == null)
+		if (piezas[movimiento.GetPosicionInicial().GetColumna()][movimiento.GetPosicionInicial().GetFila()] == null) // usar hay pieza TODO
 			throw new JuegoException("No hay pieza para mover");
 
 //							posicion								pieza
@@ -138,14 +138,19 @@ public class Tablero {
 	 * 
 	 * @return Devuelve una copia del tablero.
 	 */
-	public Object Clone() {
-		Pieza[][] tableroClon = new Pieza[TAMAÑO_FILA][TAMAÑO_COLUMNA];
+	public Tablero Clone() { //crear new tablero y copiarle el array, luego devolverlo
+		
+		Tablero tableroClon = new Tablero();
+		Pieza[][] piezasClon = new Pieza[TAMAÑO_FILA][TAMAÑO_COLUMNA];
 
-		for (int i = 0; i < TAMAÑO_COLUMNA; i++)
+		for (int i = 0; i < TAMAÑO_COLUMNA; i++) {
 			for (int j = 0; j < TAMAÑO_FILA; j++) {
-				if (tablero[i][j] != null)
-					tableroClon[i][j] = tablero[i][j];
+				if (piezas[i][j] != null)
+					piezasClon[i][j] = piezas[i][j];
 			}
+		}
+		
+		tableroClon.piezas = piezasClon;
 		return tableroClon;
 //		return tablero.clone();
 	}
