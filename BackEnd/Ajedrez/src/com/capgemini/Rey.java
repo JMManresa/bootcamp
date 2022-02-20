@@ -9,11 +9,11 @@ public class Rey extends Pieza {
 	}
 
 	@Override
-	protected boolean EsValido(Movimiento movimiento, Tablero tablero) {
+	protected boolean EsValido(Movimiento movimiento, Tablero tablero) throws JuegoException {
 		if (movimiento == null || tablero == null)
 			throw new NullPointerException("Movimiento o tablero null");
 
-		return ((movimiento.SaltoHorizontal() == 1 && movimiento.SaltoVertical() == 1) // diagonal
+		return (!tablero.HayPiezasEntre(movimiento) && (movimiento.SaltoHorizontal() == 1 && movimiento.SaltoVertical() == 1) // diagonal
 				|| (movimiento.SaltoHorizontal() == 1 && movimiento.SaltoVertical() == 0) // horizontal
 				|| (movimiento.SaltoHorizontal() == 0 && movimiento.SaltoVertical() == 1)); // vertical
 	}

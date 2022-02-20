@@ -13,7 +13,7 @@ public class Alfil extends Pieza {
 		if (movimiento == null || tablero == null)
 			throw new NullPointerException("Movimiento o tablero null");
 		
-		return movimiento.EsDiagonal() && !tablero.HayPiezasEntre(movimiento);
+		return !tablero.HayPiezasEntre(movimiento) && movimiento.EsDiagonal() && !tablero.HayPiezasEntre(movimiento);
 	}
 
 }

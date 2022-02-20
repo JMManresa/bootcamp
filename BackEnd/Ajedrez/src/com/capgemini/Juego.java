@@ -35,9 +35,6 @@ public class Juego {
 		if (pieza.GetColor() != GetTurno())
 			throw new JuegoException("No puedes mover las piezas del rival.");
 
-		if (tablero.HayPiezasEntre(movimiento)) //esto va en cada una de las piezas
-			throw new JuegoException("Hay piezas entre el movimiento.");
-
 		int columnaFin = movimiento.GetPosicionFinal().GetColumna(), filaFin = movimiento.GetPosicionFinal().GetFila();
 
 		if (tablero.HayPieza(columnaFin, filaFin)) {
