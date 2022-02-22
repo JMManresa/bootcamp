@@ -7,11 +7,11 @@ public class Movimiento {
 		if (NotacionInternacional == null || NotacionInternacional.length() > 4)
 			throw new IllegalArgumentException("La cadena debe tener 4 dígitos");
 
-		char filaIni = NotacionInternacional.charAt(0), filaFin = NotacionInternacional.charAt(2),
-				columnaIni = NotacionInternacional.charAt(1), columnaFin = NotacionInternacional.charAt(3);
+		char columnaIni = NotacionInternacional.charAt(0), columnaFin = NotacionInternacional.charAt(2),
+				filaIni = NotacionInternacional.charAt(1), filaFin = NotacionInternacional.charAt(3);
 
-		Posicion auxIni = new Posicion(filaIni, columnaIni);
-		Posicion auxFin = new Posicion(filaFin, columnaFin);
+		Posicion auxIni = new Posicion(columnaIni, filaIni);
+		Posicion auxFin = new Posicion(columnaFin, filaFin);
 		
 		if(auxIni.Equals(auxFin))
 			throw new JuegoException("La posicion inicial es igual a la final. No hay movimiento.");

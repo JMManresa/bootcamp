@@ -36,7 +36,7 @@ class PosicionTest {
 		}
 		
 		@ParameterizedTest
-		@CsvSource(value = {"A,2,1", "a,2,1", "H,7,8"})
+		@CsvSource(value = {"A,2,1", "a,2,1", "H,7,8", "F,2,6"})
 		void char_char_getColumna(char columna, char fila, int resultado) {
 			assertEquals(resultado, new Posicion(columna, fila).GetColumna());
 		}

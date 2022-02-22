@@ -179,14 +179,14 @@ public class Tablero {
 			throw new IllegalArgumentException("Movimiento null");
 
 		if (!(movimiento.EsHorizontal() || movimiento.EsVertical()
-				|| (movimiento.EsDiagonal() && movimiento.SaltoHorizontal() == movimiento.SaltoVertical())))
+				|| movimiento.EsDiagonal()))
 			throw new JuegoException("El movimiento debe ser horizontal, vertical o diagonal");
 
 		int columnaIni = movimiento.GetPosicionInicial().GetColumna(), filaIni = movimiento.GetPosicionInicial().GetFila(),
 			columnaFin = movimiento.GetPosicionFinal().GetColumna(), filaFin = movimiento.GetPosicionFinal().GetFila(),
 			siguienteColumna = columnaIni, siguienteFila = filaIni;
 
-		while (columnaFin - 1 != siguienteColumna && filaFin - 1 != siguienteFila) { //los -1 son para no incluir la ultima posicion
+		while (columnaFin != siguienteColumna && filaFin != siguienteFila) {
 			siguienteColumna += movimiento.DeltaColumna();
 			siguienteFila += movimiento.DeltaFila();
 			if (HayPieza(siguienteColumna, siguienteFila)) {
