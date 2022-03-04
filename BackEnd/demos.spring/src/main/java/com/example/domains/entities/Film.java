@@ -2,81 +2,143 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 
 /**
  * The persistent class for the film database table.
  * 
  */
 @Entity
-@Table(name="film")
-@NamedQuery(name="Film.findAll", query="SELECT f FROM Film f")
-public class Film implements Serializable {
+@Table(name = "film")
+@NamedQuery(name = "Film.findAll", query = "SELECT f FROM Film f")
+public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="film_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "film_id")
+	@JsonProperty("id")
 	private int filmId;
+
+	@NotBlank
+	@Length(max = 128)
+	@JsonProperty("titulo")
+	private String title;
 
 	@Lob
 	private String description;
 
-	@Column(name="last_update")
+	@Column(name = "release_year")
+	@Min(1901)
+	@Max(2155)
+	private Short releaseYear;
+
+	@Column(name = "last_update")
+	@Generated(value = GenerationTime.ALWAYS)
 	private Timestamp lastUpdate;
 
+	@Positive
 	private int length;
 
 	private String rating;
 
-	@Column(name="release_year")
-	private short releaseYear;
-
-	@Column(name="rental_duration")
+	@Column(name = "rental_duration")
+	@NotNull
+	@Positive
 	private byte rentalDuration;
 
-	@Column(name="rental_rate")
+	@Column(name = "rental_rate")
+	@DecimalMin(value = "0.0", inclusive = false)
+	@Digits(integer = 2, fraction = 2)
+	@NotNull
 	private BigDecimal rentalRate;
 
-	@Column(name="replacement_cost")
+	@Column(name = "replacement_cost")
+	@DecimalMin(value = "0.0", inclusive = false)
+	@Digits(integer = 3, fraction = 2)
+	@NotNull
 	private BigDecimal replacementCost;
 
-	private String title;
-
-	//bi-directional many-to-one association to Language
+	
+	// bi-directional many-to-one association to Language
 	@ManyToOne
-	@JoinColumn(name="language_id")
+	@JoinColumn(name = "language_id")
 	private Language language;
 
-	//bi-directional many-to-one association to Language
+	// bi-directional many-to-one association to Language
 	@ManyToOne
-	@JoinColumn(name="original_language_id")
+	@JoinColumn(name = "original_language_id")
 	private Language languageVO;
 
-	//bi-directional many-to-one association to FilmActor
-	@OneToMany(mappedBy="film")
+	// bi-directional many-to-one association to FilmActor
+	//POR DEFECTO NO SE PROPAGAN LOS CAMBIOS, el cascade es para propagar, osea que si borras la peli borras su filmActor
+	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FilmActor> filmActors;
 
-	//bi-directional many-to-one association to FilmCategory
-	@OneToMany(mappedBy="film")
+	// bi-directional many-to-one association to FilmCategory
+	//POR DEFECTO NO SE PROPAGAN LOS CAMBIOS, el cascade es para propagar, osea que si borras la peli borras su filmCategory
+	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FilmCategory> filmCategories;
 
-	//bi-directional many-to-one association to Inventory
-	@OneToMany(mappedBy="film")
+	// bi-directional many-to-one association to Inventory
+	@OneToMany(mappedBy = "film")
 	private List<Inventory> inventories;
 
 	public Film() {
-	}
-	
-	public Film(int filmId) {
 		super();
+		filmActors = new ArrayList<>();
+		filmCategories = new ArrayList<>();
+		inventories = new ArrayList<>();
+	}
+
+	public Film(int filmId) {
+		this();
 		this.filmId = filmId;
 	}
 
+	public Film(int filmId, @NotBlank @Length(max = 128) String title) {
+		this();
+		this.filmId = filmId;
+		this.title = title;
+	}
 
+	public Film(int filmId, @NotBlank @Length(max = 128) String title, String description,
+			@Min(1901) @Max(2155) Short releaseYear, @Positive int length, String rating,
+			@NotNull @Positive byte rentalDuration,
+			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) @NotNull BigDecimal rentalRate,
+			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) @NotNull BigDecimal replacementCost,
+			Language language, Language languageVO) {
+		this();
+		this.filmId = filmId;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.length = length;
+		this.rating = rating;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+		this.language = language;
+		this.languageVO = languageVO;
+	}
 
 	public int getFilmId() {
 		return this.filmId;
@@ -118,7 +180,7 @@ public class Film implements Serializable {
 		this.rating = rating;
 	}
 
-	public short getReleaseYear() {
+	public Short getReleaseYear() {
 		return this.releaseYear;
 	}
 
@@ -189,11 +251,29 @@ public class Film implements Serializable {
 		return filmActor;
 	}
 
+	public FilmActor addFilmActor(Actor actor) {
+		var filmActor = new FilmActor(actor, this);
+		getFilmActors().add(filmActor);
+		return filmActor;
+	}
+
 	public FilmActor removeFilmActor(FilmActor filmActor) {
 		getFilmActors().remove(filmActor);
 		filmActor.setFilm(null);
 
 		return filmActor;
+	}
+
+	public FilmActor removeFilmActor(Actor actor) {
+		var filmActor = getFilmActors().stream().filter(item -> item.getId().getActorId() == actor.getActorId())
+				.findFirst();
+		if (filmActor.isPresent()) {
+			getFilmActors().remove(filmActor.get());
+			filmActor.get().setFilm(null);
+		}
+
+		// getFilmActors().remove(new FilmActor(actor, this)); // --> Version simplificada usando los equals que tiene el remove 
+		return filmActor.get();
 	}
 
 	public List<FilmCategory> getFilmCategories() {
@@ -240,4 +320,26 @@ public class Film implements Serializable {
 		return inventory;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(filmId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Film))
+			return false;
+		Film other = (Film) obj;
+		return filmId == other.filmId;
+	}
+
+	@Override
+	public String toString() {
+		return "Film [filmId=" + filmId + ", title=" + title + "]";
+	}
+
 }
+
+

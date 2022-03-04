@@ -59,6 +59,15 @@ public class Customer implements Serializable {
 
 	public Customer() {
 	}
+	
+	
+
+	public Customer(int customerId) {
+		super();
+		this.customerId = customerId;
+	}
+
+
 
 	public int getCustomerId() {
 		return this.customerId;
