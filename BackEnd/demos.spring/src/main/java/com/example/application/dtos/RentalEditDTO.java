@@ -3,12 +3,18 @@ package com.example.application.dtos;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 import com.example.domains.entities.Customer;
 import com.example.domains.entities.Inventory;
 import com.example.domains.entities.Payment;
 import com.example.domains.entities.Rental;
 import com.example.domains.entities.Staff;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,12 +22,38 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class RentalEditDTO {
 
+	@JsonProperty("id")
+	@ApiModelProperty(value = "Identificador del alquiler")
 	private int rentalId;
+	
+	@JsonProperty("fechaAlquiler")
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@ApiModelProperty(value = "Fecha del alquiler")
 	private Date rentalDate;
+	
+	@JsonProperty("idPelicula")
+	@Positive
+	@ApiModelProperty(value = "Identificador de la pelicula")
 	private int inventory;
+	
+	@JsonProperty("idCliente")
+	@Positive
+	@ApiModelProperty(value = "Identificador del cliente")
 	private int customer;
+	
+	@JsonProperty("fechaDevolucion")
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@ApiModelProperty(value = "Fecha de la devolucion")
 	private Date returnDate;
+	
+	@JsonProperty("idEmpleado")
+	@Positive
+	@ApiModelProperty(value = "Identificador del empleado")
 	private int staff;
+	
+	@ApiModelProperty(value = "Lista de pagos")
 	private List<PaymentEditDTO> payments;
 	
 	public static RentalEditDTO from(Rental source) {

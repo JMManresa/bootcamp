@@ -2,9 +2,15 @@ package com.example.application.dtos;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 import com.example.domains.entities.Rental;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,12 +18,18 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class RentalShortDTO {
 	@JsonProperty("id")
+	@ApiModelProperty(value = "Identificador del alquiler")
 	private int rentalId;
 
-	@JsonProperty("fecha")
+	@JsonProperty("fechaAlquiler")
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@ApiModelProperty(value = "Fecha del alquiler")
 	private Date rentalDate;
 
 	@JsonProperty("cliente")
+	@NotBlank
+	@ApiModelProperty(value = "Nombre del cliente")
 	private String Customer;
 
 	public static RentalShortDTO from(Rental source) {
