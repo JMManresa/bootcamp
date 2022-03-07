@@ -21,11 +21,10 @@ public class RentalShortDTO {
 	@ApiModelProperty(value = "Identificador del alquiler")
 	private int rentalId;
 
-	@JsonProperty("fechaAlquiler")
-	@NotNull
-	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-	@ApiModelProperty(value = "Fecha del alquiler")
-	private Date rentalDate;
+	@JsonProperty("idPelicula")
+	@NotBlank
+	@ApiModelProperty(value = "Nombre de la pelicula")
+	private String title;
 
 	@JsonProperty("cliente")
 	@NotBlank
@@ -35,7 +34,7 @@ public class RentalShortDTO {
 	public static RentalShortDTO from(Rental source) {
 		return new RentalShortDTO(
 				source.getRentalId(),
-				source.getRentalDate(),
+				source.getInventory().getFilm().getTitle(),
 				source.getCustomer().getFirstName() + " " + source.getCustomer().getLastName());
 	}
 }

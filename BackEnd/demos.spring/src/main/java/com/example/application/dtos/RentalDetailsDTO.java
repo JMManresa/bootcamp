@@ -30,7 +30,7 @@ public class RentalDetailsDTO {
 	@ApiModelProperty(value = "Fecha del alquiler")
 	private Date rentalDate;
 	
-	@JsonProperty("idPelicula")
+	@JsonProperty("pelicula")
 	@NotBlank
 	@ApiModelProperty(value = "Nombre de la pelicula")
 	private String inventory;

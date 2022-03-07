@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import com.example.domains.contracts.ActorRepository;
 import com.example.domains.contracts.repositories.FilmRepository;
@@ -14,6 +15,7 @@ import com.example.ioc.Servicio;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @EnableOpenApi
+@EnableEurekaClient
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
