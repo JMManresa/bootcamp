@@ -272,8 +272,11 @@ public class Film extends EntityBase<Film> implements Serializable {
 			filmActor.get().setFilm(null);
 		}
 
-		// getFilmActors().remove(new FilmActor(actor, this)); // --> Version simplificada usando los equals que tiene el remove 
-		return filmActor.get();
+		// getFilmActors().remove(new FilmActor(actor, this)); // --> Version simplificada usando los equals que tiene el remove
+		if(filmActor.isPresent())
+			return filmActor.get();
+		else
+			return null;
 	}
 
 	public List<FilmCategory> getFilmCategories() {
