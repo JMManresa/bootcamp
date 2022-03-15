@@ -14,11 +14,10 @@ a{
 }
 
 hr {
-    width: 80%;
     height: 5px;
     background-color: rgb(94, 94, 94);
     border-style: none;
-    margin: auto;
+    margin: 0 10% 0 10%;
 }
 
 img{
@@ -49,7 +48,7 @@ body>main{
 
 body>main>h1{
     color: #e69100;
-    padding: .5em 0 .25em 1.2em;
+    padding: .5em 0 .25em 10%;
 }
 
 /*FOOTER*/
@@ -59,6 +58,56 @@ body>footer {
     font-weight: bold;
     border-bottom: 1px solid;
 }
+
+/*FORMULARIO*/
+body>main>form{
+	border: 2px solid #ddd;
+
+    background-color: white;
+	width: 70%;
+	max-width: 500px;
+	margin: 1em auto;
+}
+
+	.form-inputs{
+		padding: 1em;
+		flex-grow: 1;
+		font-weight: bold;
+	}
+		.form-inputs>input{
+			border: 2px solid #ddd;
+			padding: .65em;
+			margin-top: .5em;
+			margin-bottom: 1em;
+
+		}
+			.form-inputs>input:hover{
+				background-color: #eee;
+			}
+
+	.form-buttons{
+		background-color: #ddd;
+		height: 5em;
+		padding: 0 1em;
+
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+		.form-buttons>button{
+			width: 7em;
+			height: 2.5em;
+			border: none;
+			cursor: pointer;
+			background-color: #e69100;
+			color:#3d2700;
+			font-weight: bold;
+		}
+
+		.form-buttons>button:hover{
+			transform: scale(1.05);
+			border: 1px solid #000;
+		}
 
 /*CLASES*/
 .border {
@@ -109,6 +158,10 @@ body>footer {
     .pizzaFooter>p {
         margin: .5em 1.25em .5em 1.25em;
     }
+
+.mouseOver {
+    cursor: pointer;
+}
 
 /*MEDIA QUERY*/
 @media all and (min-width: 500px) {
