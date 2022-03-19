@@ -1,0 +1,65 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <meta charset="UTF-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <link rel="stylesheet" href="calculadora.css" /> 
+    <title>Calculadora</title> 
+  </head> 
+  <body> 
+    <header> 
+      <h1>Calculadora</h1> 
+    </header> 
+    <main class="calculadora"> 
+      <div class="pantalla-secundaria"></div>
+      <div class="pantalla-principal">0</div> 
+ 
+      <div class="botonera"> 
+        <button class="operador" value="+">+</button> 
+        <button class="operador" value="-">-</button> 
+        <button class="operador" value="*">&times;</button> 
+        <button class="operador" value="/">&divide;</button> 
+ 
+        <button class="numerico" value="7">7</button> 
+        <button class="numerico" value="8">8</button> 
+        <button class="numerico" value="9">9</button> 
+ 
+        <button class="numerico" value="4">4</button> 
+        <button class="numerico" value="5">5</button> 
+        <button class="numerico" value="6">6</button> 
+ 
+        <button class="numerico" value="1">1</button> 
+        <button class="numerico" value="2">2</button> 
+        <button class="numerico" value="3">3</button> 
+ 
+        <button class="numerico" value="0">0</button> 
+        <button class="numerico" value=".">.</button> 
+ 
+        <button value="AC">AC</button> 
+        <button value="=">=</button> 
+      </div> 
+    </main> 
+ 
+    <script src="calculadora.js"></script> 
+    <script>
+      const calculadora = new Calculadora(document.querySelector(".pantalla-principal"), document.querySelector(".pantalla-secundaria")); 
+ 
+      //==================Asignacion de eventos para los botones===================
+      document.querySelectorAll(".numerico").forEach((btn) => { 
+        btn.addEventListener("click", (event) => calculadora.imprimirEnPrincipal(event.target.value)); 
+      }); 
+ 
+      document.querySelectorAll(".operador").forEach((btn) => { 
+        btn.addEventListener("click", (event) => calculadora.calcula(event.target.value)); 
+      });
+
+      document.querySelector("button[value='=']") 
+      .addEventListener("click", () => calculadora.calcula(event.target.value));
+ 
+      document.querySelector("button[value='AC']") 
+      .addEventListener("click", () => calculadora.resetear());
+      //===========================================================================
+    </script> 
+  </body> 
+</html>
