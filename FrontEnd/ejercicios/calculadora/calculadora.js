@@ -35,8 +35,6 @@ class Calculadora {
     if(parseFloat(this.pantallaPrincipal.textContent) != this.acumulado) {
         this.limpiar();
         this.imprimirEnPrincipal(this.acumulado);
-    } else {
-        
     }
     
     this.operadorPendiente = nuevoOperador;

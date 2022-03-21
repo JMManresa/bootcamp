@@ -69,13 +69,13 @@ function numeroAleatorioEntre(min, max) {
   
   /*Crear una función que valide un NIF*/
   
-  function NifValidator() {
+  function NifValidator(value) {
     if (value == null) return true;
     value = value.toUpperCase();
     if (!value.matches("^\\d{1,8}[A-Z]$")) return false;
     return (
       "TRWAGMYFPDXBNJZSQVHLCKE".charAt(
-        Integer.parseInt(value.substring(0, value.length() - 1)) % 23
+        parseInt(value.substring(0, value.length() - 1)) % 23
       ) == value.charAt(value.length() - 1)
     );
   }
