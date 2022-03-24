@@ -10,23 +10,23 @@ export class CalculadoraComponent implements OnInit {
   public principal: string = "0";
   public secundaria: string = "";
   public acumulado: number = 0;
-  public operando: number = 0;
+  public operando: string = "0";
   public operadorPendiente: string = "+";
 
   calcula(nuevoOperador: string) {
 
     switch (this.operadorPendiente) {
       case "+":
-        this.acumulado += this.operando;
+        this.acumulado += parseFloat(this.operando);
         break;
       case "-":
-        this.acumulado -= this.operando;
+        this.acumulado -= parseFloat(this.operando);
         break;
       case "*":
-        this.acumulado *= this.operando;
+        this.acumulado *= parseFloat(this.operando);
         break;
       case "/":
-        this.acumulado /= this.operando;
+        this.acumulado /= parseFloat(this.operando);
         break;
       case "=":
         break;
@@ -37,10 +37,8 @@ export class CalculadoraComponent implements OnInit {
         this.imprimirEnPrincipal(this.acumulado.toString());
     }
     this.operadorPendiente = nuevoOperador;
-    this.operando = 0;
+    this.operando = "0";
   }
-
-
 
   imprimirEnPrincipal(value: string) {
     if (this.principal == "0" || this.principal  == this.acumulado.toString()) {
@@ -49,7 +47,8 @@ export class CalculadoraComponent implements OnInit {
       this.principal += value;
     }
     //Guardamos el numero en formato string
-    this.operando += parseFloat(value);
+    this.operando += value;
+
   }
 
   imprimirEnSecundaria(operador: string) {
@@ -64,7 +63,7 @@ export class CalculadoraComponent implements OnInit {
     this.principal = "0";
     this.secundaria = "";
     this.acumulado = 0;
-    this.operando = 0;
+    this.operando = "0";
     this.operadorPendiente = "+";
   }
 
