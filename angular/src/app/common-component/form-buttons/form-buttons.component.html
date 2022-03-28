@@ -1,0 +1,15 @@
+<b>
+  <input
+    class="btn btn-success"
+    type="button"
+    value="enviar"
+    (click)="send.emit(null)"
+    [disabled]="disabled"
+  />
+  <input
+    class="btn btn-warning"
+    type="button"
+    value="volver"
+    (click)="cancel.emit(null)"
+  />
+</b>
