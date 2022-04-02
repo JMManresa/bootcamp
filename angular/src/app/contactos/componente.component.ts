@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ContactosViewModelService } from './servicios.service';
+
 @Component({
   selector: 'app-contactos',
   templateUrl: './tmpl-anfitrion.component.html',
@@ -14,6 +16,7 @@ export class ContactosComponent implements OnInit {
     this.vm.list();
   }
 }
+
 @Component({
   selector: 'app-contactos-list',
   templateUrl: './tmpl-list.component.html',
@@ -24,7 +27,9 @@ export class ContactosListComponent implements OnInit {
   public get VM(): ContactosViewModelService {
     return this.vm;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.vm.list();
+  }
 }
 @Component({
   selector: 'app-contactos-add',
@@ -36,7 +41,9 @@ export class ContactosAddComponent implements OnInit {
   public get VM(): ContactosViewModelService {
     return this.vm;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.vm.add();
+  }
 }
 @Component({
   selector: 'app-contactos-edit',
@@ -44,12 +51,28 @@ export class ContactosAddComponent implements OnInit {
   styleUrls: ['./componente.component.css'],
 })
 export class ContactosEditComponent implements OnInit, OnDestroy {
-  constructor(protected vm: ContactosViewModelService) {}
+  private obs$: any;
+  constructor(
+    protected vm: ContactosViewModelService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) {}
   public get VM(): ContactosViewModelService {
     return this.vm;
   }
-  ngOnInit(): void {}
-  ngOnDestroy(): void {}
+  ngOnInit(): void {
+    this.obs$ = this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = parseInt(params?.get('id') ?? '');
+      if (id) {
+        this.vm.edit(id);
+      } else {
+        this.router.navigate(['/404.html']);
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    this.obs$.unsubscribe();
+  }
 }
 @Component({
   selector: 'app-contactos-view',
@@ -57,13 +80,30 @@ export class ContactosEditComponent implements OnInit, OnDestroy {
   styleUrls: ['./componente.component.css'],
 })
 export class ContactosViewComponent implements OnInit, OnDestroy {
-  constructor(protected vm: ContactosViewModelService) {}
+  private obs$: any;
+  constructor(
+    protected vm: ContactosViewModelService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) {}
   public get VM(): ContactosViewModelService {
     return this.vm;
   }
-  ngOnInit(): void {}
-  ngOnDestroy(): void {}
+  ngOnInit(): void {
+    this.obs$ = this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = parseInt(params?.get('id') ?? '');
+      if (id) {
+        this.vm.view(id);
+      } else {
+        this.router.navigate(['/404.html']);
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    this.obs$.unsubscribe();
+  }
 }
+
 export const CONTACTOS_COMPONENTES = [
   ContactosComponent,
   ContactosListComponent,
